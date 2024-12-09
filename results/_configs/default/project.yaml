@@ -1,0 +1,7 @@
+project:
+  type: book
+  execute-dir: file
+  output-dir: _book1
+  resources:
+    - files/
+    - _img/

@@ -1,0 +1,14 @@
+website:
+  title: [PROJECT TITLE]
+  description: [PROJECT DESCRIPTION]
+  # site-path: 
+  # repo-url: 
+  render:
+    - index.qmd
+    - _template_module/_template.qmd
+
+  sidebar:
+    - title: Analysis steps
+      contents:
+        - index.qmd
+

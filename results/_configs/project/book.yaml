@@ -1,0 +1,11 @@
+book:
+  title: [PROJECT TITLE]
+
+  sidebar:
+    title: Analysis steps
+    contents:
+      - index.qmd
+
+  chapters:
+    - index.qmd
+    - _template_module/_template.qmd

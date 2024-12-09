@@ -1,0 +1,49 @@
+---
+title: ""
+author: "philip.east@crick.ac.uk"
+date: 'Compiled: `r format(Sys.time(), "%d %B, %Y @ %H:%M:%S")`'
+---
+
+```{r}
+#| label: init_r
+#| include: false
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE )
+options(scipen=15)
+```
+
+```{r}
+#| label: init_params
+
+library( jsonlite )
+library( yaml )
+library( tidyverse )
+
+## read yml config file _project-config.yml into nested list
+params_file <- file.path( "_project-config.yml" )
+if( file.exists( params_file ) )	{
+    params <- read_yaml( params_file )
+} else {
+    stop( paste( "Can't find fig-vaR configuration file", params_file ) )
+}
+
+## set new params here (consider lockBinding() to prevent overwrite
+
+## write updated list to yml config file _project-config.yml into nested list
+write.yaml( params, params_file )
+
+pdat <- read.csv( file = params$exp_design_file, colClasses = c( "character" ) )
+
+sobj_file_paths <- list()
+level <- "sample-level"
+sobjs <- map( pdat$sample_label, function( l ) {
+  sobj_file <- paste0( l, "_unfiltered.rds" ))
+  sobj_file_paths[[ l ]] <- file.path( params$object_home, level, sobj_file_paths )  
+  readRDS( sobj_file_paths[[ l ]] )
+}) %>%
+  setNames( pdat$sample_label )
+
+npcs <- params$npcs
+```
+
+
